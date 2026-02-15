@@ -1,0 +1,50 @@
+name: mock-review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout student repo
+        uses: actions/checkout@v4
+
+      - name: Checkout course context repo
+        uses: actions/checkout@v4
+        with:
+          repository: alex-a-soto  /course-context
+          ref: main
+          path: course-context
+
+      - name: Build mock feedback
+        run: |
+          {
+            echo "## Mock Review Result"
+            echo ""
+            echo "### Found files"
+            echo "- student prd.md: $(test -f prd.md && echo yes || echo no)"
+            echo "- course context/prd_guidance.md: $(test -f course-context/context/prd_guidance.md && echo yes || echo no)"
+            echo "- course templates/prd_template.md: $(test -f course-context/templates/prd_template.md && echo yes || echo no)"
+            echo ""
+            echo "### Next"
+            echo "If all are **yes**, the plumbing works. Next step swaps this mock for a real LLM call."
+          } > feedback.md
+
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('feedback.md', 'utf8');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body
+            });
