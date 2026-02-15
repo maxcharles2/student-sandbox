@@ -1,0 +1,6 @@
+context:
+  repo: "alex-a-soto/course-context"
+  ref: "main"
+  include:
+    - "context/prd_guidance.md"
+    - "templates/prd_template.md"
