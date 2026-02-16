@@ -18,7 +18,7 @@ jobs:
       - name: Checkout course context repo
         uses: actions/checkout@v4
         with:
-          repository: alex-a-soto/course-context
+          repository: resilientcoders/course-context
           ref: main
           path: course-context
           token: ${{ secrets.COURSE_CONTEXT_TOKEN }}
