@@ -15,30 +15,10 @@ def read_text(path: str) -> str:
     return f.read()
 
 def main():
-  prd = read_text("prd.md")
-  guidance = read_text("course-context/context/prd_guidance.md")
-  template = read_text("course-context/templates/prd_template.md")
-
-  system = "You are a course assistant. Provide concise, actionable feedback. Do not mention policies."
-  user = textwrap.dedent(f"""
-  Use the following CANON guidance and template to review the student's PRD.
-
-  --- CANON: Guidance ---
-  {guidance}
-
-  --- CANON: Template ---
-  {template}
-
-  --- STUDENT: PRD ---
-  {prd}
-
-  Return Markdown with these sections:
-  1) Checklist (are required sections present?)
-  2) Top issues (max 5)
-  3) Suggested edits (diff-style blocks)
-  4) Missing acceptance criteria / tests
-  5) Questions (max 5)
-  """).strip()
+  prompt = read_text("compiled.lcp").strip()
+  if not prompt:
+    print("compiled.lcp is empty", file=sys.stderr)
+    sys.exit(2)
 
   url = "https://openrouter.ai/api/v1/chat/completions"
   headers = {
