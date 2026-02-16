@@ -50,17 +50,13 @@ def main():
   }
 
   payload = {
-    # Pick a widely available OpenRouter model; you can change later.
-    # Examples you might use later:
-    # - "anthropic/claude-3.5-sonnet"
-    # - "openai/gpt-4o-mini"
-    # - "google/gemini-2.0-flash-001"
     "model": "z-ai/glm-4.5-air",
     "messages": [
       {"role": "system", "content": system},
       {"role": "user", "content": user},
     ],
     "temperature": 0.2,
+    "max_tokens": 2000,
   }
 
   r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=120)
