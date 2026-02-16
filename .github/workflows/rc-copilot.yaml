@@ -37,7 +37,7 @@ jobs:
         env:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
         run: |
-          python scripts/call_openai.py > feedback.md
+          python scripts/call_ai_model.py > feedback.md
 
       - name: Comment on PR
         uses: actions/github-script@v7

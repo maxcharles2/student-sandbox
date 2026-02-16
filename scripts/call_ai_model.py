@@ -40,45 +40,39 @@ def main():
   5) Questions (max 5)
   """).strip()
 
-  # OpenAI Responses API
-  url = "https://api.openai.com/v1/responses"
+  url = "https://openrouter.ai/api/v1/chat/completions"
   headers = {
     "Authorization": f"Bearer {API_KEY}",
     "Content-Type": "application/json",
+    # Recommended by OpenRouter (helps attribution; safe placeholders)
+    "HTTP-Referer": "https://github.com/",
+    "X-Title": "student-sandbox-ai-review",
   }
+
   payload = {
-    "model": "gpt-5",
-    "input": [
+    # Pick a widely available OpenRouter model; you can change later.
+    # Examples you might use later:
+    # - "anthropic/claude-3.5-sonnet"
+    # - "openai/gpt-4o-mini"
+    # - "google/gemini-2.0-flash-001"
+    "model": "anthropic/claude-opus-4.5",
+    "messages": [
       {"role": "system", "content": system},
-      {"role": "user", "content": user}
+      {"role": "user", "content": user},
     ],
+    "temperature": 0.2,
   }
 
   r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=120)
   if r.status_code >= 300:
-    print(f"OpenAI error {r.status_code}:\n{r.text}", file=sys.stderr)
+    print(f"OpenRouter error {r.status_code}:\n{r.text}", file=sys.stderr)
     sys.exit(3)
 
   data = r.json()
-
-  # Extract text from common Responses API shapes
-  out = ""
-  if "output" in data and isinstance(data["output"], list):
-    # Find first text content
-    for item in data["output"]:
-      if isinstance(item, dict) and item.get("type") == "message":
-        content = item.get("content", [])
-        for c in content:
-          if c.get("type") == "output_text":
-            out += c.get("text", "")
-        if out.strip():
-          break
-  if not out.strip():
-    # Fallback: some responses return `output_text`
-    out = data.get("output_text", "")
-
-  if not out.strip():
-    out = "LLM returned no text output (unexpected response shape)."
+  try:
+    out = data["choices"][0]["message"]["content"]
+  except Exception:
+    out = f"Unexpected response shape:\n{json.dumps(data, indent=2)[:4000]}"
 
   print(out)
 
