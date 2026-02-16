@@ -55,7 +55,7 @@ def main():
     # - "anthropic/claude-3.5-sonnet"
     # - "openai/gpt-4o-mini"
     # - "google/gemini-2.0-flash-001"
-    "model": "anthropic/claude-opus-4.5",
+    "model": "z-ai/glm-4.5-air",
     "messages": [
       {"role": "system", "content": system},
       {"role": "user", "content": user},
