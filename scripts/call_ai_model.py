@@ -50,13 +50,12 @@ def main():
   }
 
   payload = {
-    "model": "z-ai/glm-4.5-air",
+    "model": "arcee-ai/trinity-large-preview:free",
     "messages": [
       {"role": "system", "content": system},
       {"role": "user", "content": user},
     ],
     "temperature": 0.2,
-    "maxContextTokens": 2000,
   }
 
   r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=120)
