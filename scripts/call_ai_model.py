@@ -2,7 +2,6 @@
 import json
 import os
 import sys
-import textwrap
 import requests
 
 API_KEY = os.environ.get("LLM_API_KEY")
@@ -24,30 +23,44 @@ def main():
   headers = {
     "Authorization": f"Bearer {API_KEY}",
     "Content-Type": "application/json",
-    # Recommended by OpenRouter (helps attribution; safe placeholders)
     "HTTP-Referer": "https://github.com/",
-    "X-Title": "student-sandbox-ai-review",
+    "X-Title": "rc-copilot",
   }
 
+  system = "You are a course assistant in CI. Be concise, specific, and actionable."
+
   payload = {
-    "model": "arcee-ai/trinity-large-preview:free",
+    "model": os.environ.get("OPENROUTER_MODEL", "arcee-ai/trinity-large-preview:free"),
     "messages": [
       {"role": "system", "content": system},
-      {"role": "user", "content": user},
+      {"role": "user", "content": prompt},
     ],
-    "temperature": 0.2,
+    "temperature": float(os.environ.get("TEMPERATURE", "0.2")),
+    "max_tokens": int(os.environ.get("MAX_TOKENS", "1500")),
   }
 
   r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=120)
   if r.status_code >= 300:
-    print(f"OpenRouter error {r.status_code}:\n{r.text}", file=sys.stderr)
-    sys.exit(3)
+    # emit markdown so PR comment step can still run
+    print(f"""## AI Review (fallback)
+
+Model call failed.
+
+- HTTP: **{r.status_code}**
+- Body (truncated): `{r.text[:600].replace('`','\\`')}`
+
+Try:
+- Lower MAX_TOKENS
+- Switch OPENROUTER_MODEL
+- Check OpenRouter credits/quota
+""")
+    sys.exit(0)
 
   data = r.json()
   try:
     out = data["choices"][0]["message"]["content"]
   except Exception:
-    out = f"Unexpected response shape:\n{json.dumps(data, indent=2)[:4000]}"
+    out = "Unexpected response shape:\n\n```json\n" + json.dumps(data, indent=2)[:4000] + "\n```"
 
   print(out)
 
