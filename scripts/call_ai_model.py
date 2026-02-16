@@ -56,7 +56,7 @@ def main():
       {"role": "user", "content": user},
     ],
     "temperature": 0.2,
-    "max_tokens": 2000,
+    "maxContextTokens": 2000,
   }
 
   r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=120)
