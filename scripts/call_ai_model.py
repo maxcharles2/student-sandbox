@@ -42,12 +42,13 @@ def main():
   r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=120)
   if r.status_code >= 300:
     # emit markdown so PR comment step can still run
+    body = r.text[:600].replace("`", "'")
     print(f"""## AI Review (fallback)
 
 Model call failed.
 
 - HTTP: **{r.status_code}**
-- Body (truncated): `{r.text[:600].replace('`','\\`')}`
+- Body (truncated): `{body}`
 
 Try:
 - Lower MAX_TOKENS
