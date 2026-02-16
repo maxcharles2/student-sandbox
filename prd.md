@@ -1,7 +1,7 @@
 # PRD
 
 ## Problem
-A tiny example PRD. New metaphor
+A tiny example PRD.
 
 ## User
 A student.
