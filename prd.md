@@ -1,15 +1,15 @@
-# PRD
+# PRD - Sprint 1
 
 ## Problem
-A tiny example PRD.
+What's the problem?
 
 ## User
-A student.
+Who's the user?
 
 ## Functional Requirements
-- FR-1: The app prints "hello".
+- FR-1: What's the functionality you're focused on?
 
 ## Acceptance Criteria
-### FR-1
+### FR-1:
 
 ## Non-goals
