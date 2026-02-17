@@ -1,13 +1,13 @@
 # PRD - Sprint 1
 
 ## Problem
-What's the problem?
+Members in my community have challenges finding food pantries.
 
 ## User
-Who's the user?
+Community members
 
 ## Functional Requirements
-- FR-1: What's the functionality you're focused on?
+- FR-1: Being able to identify nearby food pantries based on zip code.
 
 ## Acceptance Criteria
 ### FR-1:
