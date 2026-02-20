@@ -1,15 +1,15 @@
 # PRD - Sprint 1
 
 ## Problem
-What's the problem?
+Users need assistance evaluating the importance and legitimacy of their documents.
 
 ## User
-Who's the user?
+Non-native English speakers, people who cannot read and write, and people who have a difficult time with comprehension.
 
 ## Functional Requirements
-- FR-1: What's the functionality you're focused on?
+Documents need to be accepted from an upload form. Fields need to be extracted and displayed.
 
 ## Acceptance Criteria
-### FR-1:
+Given a user upload, text field will be populated in the app with the content of the document.
 
 ## Non-goals
