@@ -1,15 +1,15 @@
 # PRD - Sprint 1
 
 ## Problem
-What's the problem?
+Users need to ask a question about the document
 
 ## User
-Who's the user?
+Primary/Secondary, frequently asked questions
 
 ## Functional Requirements
-- FR-1: What's the functionality you're focused on?
+Document needs to be able to be retrieved and answered through the chat interface
 
 ## Acceptance Criteria
-### FR-1:
+The user is given a response that successfully answers their questions
 
 ## Non-goals
