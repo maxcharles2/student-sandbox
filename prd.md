@@ -1,15 +1,14 @@
-# PRD - Sprint 1
-
-## Problem
-What's the problem?
+# Problem
+Users need assistance evaluating the importance and legitimacy of their documents.
 
 ## User
-Who's the user?
+Non-native English speakers, people who cannot read and write, and people who have a difficult time with comprehension.
 
 ## Functional Requirements
-- FR-1: What's the functionality you're focused on?
+Documents need to be flagged based on risk, urgency, legitimacy, and provide next steps for completion
 
 ## Acceptance Criteria
+Given a user uploads a document When the system processes it Then it returns a document category with confidence score
 ### FR-1:
 
 ## Non-goals
